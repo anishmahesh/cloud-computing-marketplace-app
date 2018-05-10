@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Marketplace</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="static/css/blue_bootstrap.min.css">
+		<link rel="stylesheet" href="static/stylesheets/style.css">
+		<script type="text/javascript" src = "static/js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="static/js/rest_api.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="page-header">
+				<h1>Marketplace</h1>
+			</div>
+			
+			<div class="col-sm-10">
+				<button type="submit" class="btn btn-primary" id="sell-btn">Sell Products</button>
+				<button type="submit" class="btn btn-primary" id="buy-btn">Buy Products</button>
+			</div>
+			
+			<br>
+			<br>
+				
+			<div class="form-horizontal">
+				<div class="form-group">
+						<label class="control-label col-sm-2" for="product_id">Product ID:</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="product_id" placeholder="Enter ID of Product">
+					</div>
+					<div class="col-sm-4">
+						<button type="submit" class="btn btn-success" id="retrieve-btn">Retrieve</button>
+						<button type="submit" class="btn btn-success" id="delete-btn">Delete</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-horizontal">
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="product_name">Name:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="product_name" placeholder="Enter name for Product">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="product_category">Category:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="product_category" placeholder="Enter category for Product">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="product_price">Price:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="product_price" placeholder="Enter price for Product">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="product_description">Description:</label>
+					<div class="col-sm-10">
+						<textarea id = "product_description"  placeholder="Enter description for Product" rows="4" cols="50"></textarea>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="product_color">Color:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="product_color" placeholder="Enter color for Product">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="product_count">Product Count:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="product_count" placeholder="Enter count for Product">
+					</div>
+				</div>
+				
+				<div class="form-group" style="display: none;" id="purchase_count">
+					<label class="control-label col-sm-2" for="product_count">Purchase Count:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="purchase_count2" placeholder="Count for purchase" disabled>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-warning" style="display: none;" id="sell-unit-btn">Buy</button>
+						<button type="submit" class="btn btn-warning" id="create-btn">Create</button>
+						<button type="submit" class="btn btn-warning" id="update-btn">Update</button>
+						<button type="submit" class="btn btn-warning" id="add-unit-btn">Add Unit</button>
+						<button type="submit" class="btn btn-warning" id="clear-btn">Clear</button>
+					</div>
+				</div>
+			</div>
+			
+			<br>
+			
+			<div class="col-sm-10">
+				<button type="submit" class="btn btn-primary" id="search-btn">Show Catalog</button>
+			</div>
+			
+			<br>
+				
+			<div class="table-responsive col-md-12" style="display: none;" id="search_results">
+				<table class="table-striped">
+					<thead>
+						<tr>
+							<th class="col-md-1">ID</th>
+							<th class="col-md-2">Name</th>
+							<th class="col-md-2">Category</th>
+							<th class="col-md-2">Description</th>
+							<th class="col-md-2">Color</th>
+							<th class="col-md-2">Count</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+					
+			<footer>
+				<br>
+				<br>
+				<p>@NYU Cloud Computing</p>
+			</footer>
+		</div>
+	</body>
+</html>
+												

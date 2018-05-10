@@ -1,0 +1,94 @@
+Index: server.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- server.py	(revision a033484035520f45290efcf94e766d7b2f4f20a0)
++++ server.py	(revision )
+@@ -14,17 +14,28 @@
+ from flask import request, json, url_for, make_response, abort
+ from flask import Flask, Response, jsonify
+ from flask_api import status
++from flask_mqtt import Mqtt
+ from flask_restplus import Api, Resource, fields
+ from models import Product, DataValidationError, DatabaseConnectionError
+ from werkzeug.exceptions import NotFound
++# import paho.mqtt.client as mqtt_client
++# import paho.mqtt.publish as publish
+ 
+ 
+ # Pull options from environment
+-DEBUG = (os.getenv('DEBUG', 'False') == 'True')
++DEBUG = False#(os.getenv('DEBUG', 'False') == 'True')
+ PORT = os.getenv('PORT', '5000')
+ 
+ # Create Flask application
+ app = Flask(__name__)
++app.config['MQTT_BROKER_URL'] = 'broker.hivemq.com'  # use the free broker from HIVEMQ
++app.config['MQTT_BROKER_PORT'] = 1883  # default port for non-tls connection
++app.config['MQTT_USERNAME'] = ''  # set the username here if you need authentication for the broker
++app.config['MQTT_PASSWORD'] = ''  # set the password here if the broker demands authentication
++app.config['MQTT_KEEPALIVE'] = 5  # set the time interval for sending a ping to the broker to 5 seconds
++app.config['MQTT_TLS_ENABLED'] = False  # set TLS to disabled for testing purposes
++
++mqtt = Mqtt(app)
+ 
+ # Status Codes
+ HTTP_200_OK = 200
+@@ -34,6 +45,47 @@
+ HTTP_404_NOT_FOUND = 404
+ HTTP_409_CONFLICT = 409
+ 
++# def on_connect(client, userdata, flags, rc):
++#     print("Connected with result code "+str(rc))
++#
++#     # Subscribing in on_connect() means that if we lose the connection and
++#     # reconnect then subscriptions will be renewed.
++#     client.subscribe('myTopic')
++#
++# # The callback for when a PUBLISH message is received from the server.
++# def on_message(client, userdata, msg):
++#     print(msg.topic+" "+str(msg.payload))
++#
++#
++# def on_disconnect(client, userdata, rc):
++#     client.loop_stop(force=False)
++#     if rc != 0:
++#         print("Unexpected disconnection.")
++#     else:
++#         print("Disconnected")
++#
++#
++# client = mqtt_client.Client()
++# client.on_connect = on_connect
++# client.on_message = on_message
++# client.on_disconnect = on_disconnect
++#
++# client.connect_async("iot.eclipse.org", 1883, 60)
++# client.loop_start()
++
++@mqtt.on_connect()
++def handle_connect(client, userdata, flags, rc):
++    mqtt.subscribe('home/mytopic')
++
++
++@mqtt.on_message()
++def handle_mqtt_message(client, userdata, message):
++    data = dict(
++        topic=message.topic,
++        payload=message.payload.decode()
++    )
++    app.logger.info('Payload is %s', data['payload'])
++
+ 
+ ######################################################################
+ # Configure Swagger before initilaizing it
+@@ -254,6 +306,8 @@
+         check_content_type('application/json')
+         prod = Product()
+         app.logger.info('Payload = %s', api.payload)
++        mqtt.publish('home/mytopic', 'hello world')
++        # publish.single("myTopic", "hello world", hostname="iot.eclipse.org")
+         prod.deserialize(api.payload)
+         prod.save()
+         app.logger.info('Product with new id [%s] saved!', prod.id)

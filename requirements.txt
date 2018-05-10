@@ -1,0 +1,10 @@
+Flask==0.12
+Flask-API==0.6.9
+flask-restplus==0.10.1
+redis>=2.10
+Cerberus==1.1
+# Runtime
+honcho
+httpie
+typing
+flask-mqtt

@@ -1,0 +1,15 @@
+body {
+    background-color : gray !important;
+}
+
+.btn-primary {
+    background-color : darkcyan !important;
+}
+
+.btn-warning {
+    background-color : orange !important;
+}
+
+.btn-success {
+    background-color : brown !important;
+}

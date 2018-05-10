@@ -1,0 +1,11 @@
+applications:
+- path: .
+  memory: 128M
+  instances: 1
+  domain: mybluemix.net
+  name: cloud-computing-spring18
+  #host: nyu-product-service-f17
+  disk_quota: 1024M
+  buildpack: python_buildpack
+  services:
+  - RedisCloud
